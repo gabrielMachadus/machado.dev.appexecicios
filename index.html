@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checklist do Treino</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-3">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <div>
+        <h1 class="h4 mb-1">Checklist do Treino</h1>
+        <div class="text-secondary small">Marque cada série concluída (salva automaticamente).</div>
+      </div>
+      <button id="btnReset" class="btn btn-outline-danger btn-sm">Zerar dia</button>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2 align-items-end">
+          <div class="col-7">
+            <label class="form-label mb-1">Dia</label>
+            <select id="selDia" class="form-select">
+              <option value="1">Dia 1 – Pernas + Cardio (Escada)</option>
+              <option value="2">Dia 2 – Peito, Ombros e Tríceps</option>
+              <option value="3">Dia 3 – Core + Cardio</option>
+              <option value="4">Dia 4 – Costas e Bíceps (Galões)</option>
+              <option value="5">Dia 5 – Pernas e Glúteos</option>
+              <option value="6">Dia 6 – Funcional (Corpo todo)</option>
+              <option value="7">Dia 7 – Recuperação Ativa</option>
+            </select>
+          </div>
+          <div class="col-5">
+            <label class="form-label mb-1">Data</label>
+            <input id="inpData" type="date" class="form-control">
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="progress" role="progressbar" aria-label="Progresso do treino">
+            <div id="bar" class="progress-bar" style="width: 0%">0%</div>
+          </div>
+          <div id="txtProg" class="text-secondary small mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lista"></div>
+
+    <div class="text-secondary small mt-3">
+      Dica: abra este arquivo no celular (ou publique no GitHub Pages) e adicione à tela inicial.
+    </div>
+  </div>
+
+  <script>
+    const plano = {
+      1: [
+        { nome: "Agachamento", series: 3, reps: "15" },
+        { nome: "Afundo alternado", series: 3, reps: "10 por perna" },
+        { nome: "Escada (ritmo moderado)", series: 1, reps: "5 min" },
+        { nome: "Panturrilha no degrau", series: 3, reps: "20" },
+        { nome: "Finalização (escada)", series: 4, reps: "30s rápido / 30s descanso" }
+      ],
+      2: [
+        { nome: "Flexão de braço", series: 3, reps: "10–15" },
+        { nome: "Desenvolvimento ombro (galões)", series: 3, reps: "12" },
+        { nome: "Elevação lateral (galões)", series: 3, reps: "12" },
+        { nome: "Tríceps no banco/cadeira", series: 3, reps: "10–12" },
+        { nome: "Finalização (polichinelos)", series: 3, reps: "40s" }
+      ],
+      3: [
+        { nome: "Prancha", series: 3, reps: "30–45s" },
+        { nome: "Abdominal bicicleta", series: 3, reps: "20" },
+        { nome: "Elevação de pernas", series: 3, reps: "12" },
+        { nome: "Mountain climber", series: 3, reps: "30s" },
+        { nome: "Escada contínua", series: 1, reps: "6–8 min" }
+      ],
+      4: [
+        { nome: "Remada curvada (galões)", series: 3, reps: "12" },
+        { nome: "Rosca bíceps (galões)", series: 3, reps: "12" },
+        { nome: "Rosca martelo (galões)", series: 3, reps: "12" },
+        { nome: "Superman", series: 3, reps: "20s" },
+        { nome: "Escada leve", series: 1, reps: "5 min" }
+      ],
+      5: [
+        { nome: "Agachamento sumô", series: 3, reps: "15" },
+        { nome: "Ponte de glúteo", series: 3, reps: "20" },
+        { nome: "Step-up na escada", series: 3, reps: "10 por perna" },
+        { nome: "Agachamento isométrico (parede)", series: 3, reps: "30s" },
+        { nome: "Finalização (escada)", series: 4, reps: "40s / 20s" }
+      ],
+      6: [
+        { nome: "Burpee", series: 4, reps: "8" },
+        { nome: "Agachamento + desenvolvimento (galões)", series: 4, reps: "12" },
+        { nome: "Flexão", series: 4, reps: "10" },
+        { nome: "Prancha toque no ombro", series: 4, reps: "20" }
+      ],
+      7: [
+        { nome: "Caminhada leve", series: 1, reps: "10–20 min" },
+        { nome: "Escada leve", series: 1, reps: "10 min" },
+        { nome: "Alongamento geral", series: 1, reps: "5–10 min" }
+      ]
+    };
+
+    const selDia = document.getElementById("selDia");
+    const inpData = document.getElementById("inpData");
+    const lista = document.getElementById("lista");
+    const bar = document.getElementById("bar");
+    const txtProg = document.getElementById("txtProg");
+    const btnReset = document.getElementById("btnReset");
+
+    const hojeISO = () => new Date().toISOString().slice(0,10);
+    inpData.value = hojeISO();
+
+    const keyBase = () => `treino_check_${inpData.value}_dia_${selDia.value}`;
+
+    function loadState() {
+      try { return JSON.parse(localStorage.getItem(keyBase()) || "{}"); }
+      catch { return {}; }
+    }
+    function saveState(state) {
+      localStorage.setItem(keyBase(), JSON.stringify(state));
+    }
+
+    function render() {
+      const dia = Number(selDia.value);
+      const state = loadState();
+      lista.innerHTML = "";
+
+      let total = 0, done = 0;
+
+      plano[dia].forEach((ex, exIdx) => {
+        const card = document.createElement("div");
+        card.className = "card mb-3";
+
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        const title = document.createElement("div");
+        title.className = "d-flex justify-content-between align-items-start";
+
+        const left = document.createElement("div");
+        left.innerHTML = `<div class="fw-semibold">${ex.nome}</div><div class="text-secondary small">${ex.series} série(s) • ${ex.reps}</div>`;
+
+        const badge = document.createElement("span");
+        badge.className = "badge text-bg-secondary";
+        badge.id = `badge_${exIdx}`;
+        badge.textContent = "0/" + ex.series;
+
+        title.appendChild(left);
+        title.appendChild(badge);
+
+        body.appendChild(title);
+
+        const hr = document.createElement("hr");
+        hr.className = "my-3";
+        body.appendChild(hr);
+
+        const group = document.createElement("div");
+        group.className = "d-flex flex-wrap gap-2";
+
+        for (let s = 1; s <= ex.series; s++) {
+          total++;
+          const id = `c_${exIdx}_${s}`;
+          const checked = Boolean(state[id]);
+
+          if (checked) done++;
+
+          const wrap = document.createElement("div");
+          wrap.className = "form-check form-check-inline m-0";
+
+          const cb = document.createElement("input");
+          cb.className = "form-check-input";
+          cb.type = "checkbox";
+          cb.id = id;
+          cb.checked = checked;
+
+          cb.addEventListener("change", () => {
+            const st = loadState();
+            st[id] = cb.checked;
+            saveState(st);
+            render();
+          });
+
+          const lb = document.createElement("label");
+          lb.className = "form-check-label";
+          lb.htmlFor = id;
+          lb.textContent = "Série " + s;
+
+          wrap.appendChild(cb);
+          wrap.appendChild(lb);
+          group.appendChild(wrap);
+        }
+
+        body.appendChild(group);
+        card.appendChild(body);
+        lista.appendChild(card);
+
+        // Atualiza badge do exercício
+        let exDone = 0;
+        for (let s = 1; s <= ex.series; s++) if (state[`c_${exIdx}_${s}`]) exDone++;
+        const b = document.getElementById(`badge_${exIdx}`);
+        b.textContent = `${exDone}/${ex.series}`;
+        b.className = "badge " + (exDone === ex.series ? "text-bg-success" : "text-bg-secondary");
+      });
+
+      const pct = total ? Math.round((done/total)*100) : 0;
+      bar.style.width = pct + "%";
+      bar.textContent = pct + "%";
+      txtProg.textContent = `${done} de ${total} séries concluídas`;
+    }
+
+    selDia.addEventListener("change", render);
+    inpData.addEventListener("change", render);
+
+    btnReset.addEventListener("click", () => {
+      localStorage.removeItem(keyBase());
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
