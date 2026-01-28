@@ -52,56 +52,175 @@
       Dica: abra este arquivo no celular (ou publique no GitHub Pages) e adicione à tela inicial.
     </div>
   </div>
+ 
 
   <script>
     const plano = {
-      1: [
-        { nome: "Agachamento", series: 3, reps: "15" },
-        { nome: "Afundo alternado", series: 3, reps: "10 por perna" },
-        { nome: "Escada (ritmo moderado)", series: 1, reps: "5 min" },
-        { nome: "Panturrilha no degrau", series: 3, reps: "20" },
-        { nome: "Finalização (escada)", series: 4, reps: "30s rápido / 30s descanso" }
-      ],
-      2: [
-        { nome: "Flexão de braço", series: 3, reps: "10–15" },
-        { nome: "Desenvolvimento ombro (galões)", series: 3, reps: "12" },
-        { nome: "Elevação lateral (galões)", series: 3, reps: "12" },
-        { nome: "Tríceps no banco/cadeira", series: 3, reps: "10–12" },
-        { nome: "Finalização (polichinelos)", series: 3, reps: "40s" }
-      ],
-      3: [
-        { nome: "Prancha", series: 3, reps: "30–45s" },
-        { nome: "Abdominal bicicleta", series: 3, reps: "20" },
-        { nome: "Elevação de pernas", series: 3, reps: "12" },
-        { nome: "Mountain climber", series: 3, reps: "30s" },
-        { nome: "Escada contínua", series: 1, reps: "6–8 min" }
-      ],
-      4: [
-        { nome: "Remada curvada (galões)", series: 3, reps: "12" },
-        { nome: "Rosca bíceps (galões)", series: 3, reps: "12" },
-        { nome: "Rosca martelo (galões)", series: 3, reps: "12" },
-        { nome: "Superman", series: 3, reps: "20s" },
-        { nome: "Escada leve", series: 1, reps: "5 min" }
-      ],
-      5: [
-        { nome: "Agachamento sumô", series: 3, reps: "15" },
-        { nome: "Ponte de glúteo", series: 3, reps: "20" },
-        { nome: "Step-up na escada", series: 3, reps: "10 por perna" },
-        { nome: "Agachamento isométrico (parede)", series: 3, reps: "30s" },
-        { nome: "Finalização (escada)", series: 4, reps: "40s / 20s" }
-      ],
-      6: [
-        { nome: "Burpee", series: 4, reps: "8" },
-        { nome: "Agachamento + desenvolvimento (galões)", series: 4, reps: "12" },
-        { nome: "Flexão", series: 4, reps: "10" },
-        { nome: "Prancha toque no ombro", series: 4, reps: "20" }
-      ],
-      7: [
-        { nome: "Caminhada leve", series: 1, reps: "10–20 min" },
-        { nome: "Escada leve", series: 1, reps: "10 min" },
-        { nome: "Alongamento geral", series: 1, reps: "5–10 min" }
-      ]
-    };
+  1: [
+    {
+      nome: "Agachamento",
+      series: 3,
+      reps: "15",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/A%20U.S.%20Air%20Force%20Airman%20performs%20a%20squat%20exercise.jpg"
+    },
+    {
+      nome: "Afundo alternado",
+      series: 3,
+      reps: "10 por perna",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Airman%20performing%20lunge.jpg"
+    },
+    {
+      nome: "Panturrilha em pé",
+      series: 3,
+      reps: "20",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Standing-calf-raises-1.gif"
+    },
+    {
+      nome: "Subir escadas",
+      series: 1,
+      reps: "5 min",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Life%20Fitness%2C%20Stair%20Climbing%2C%20Spain%2C%202016.JPG"
+    }
+  ],
+
+  2: [
+    {
+      nome: "Flexão de braço",
+      series: 3,
+      reps: "10–15",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Exercise%20Press%20Up.png"
+    },
+    {
+      nome: "Desenvolvimento de ombro (galões)",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Girl%20doing%20dumbbell%20shoulder%20press%2002.jpg"
+    },
+    {
+      nome: "Elevação lateral (galões)",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/DumbbellLateralRaise.JPG"
+    },
+    {
+      nome: "Tríceps no banco/cadeira",
+      series: 3,
+      reps: "10–12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Bench-dips-2.png"
+    }
+  ],
+
+  3: [
+    {
+      nome: "Prancha",
+      series: 3,
+      reps: "30–45s",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Plank.jpg"
+    },
+    {
+      nome: "Abdominal bicicleta",
+      series: 3,
+      reps: "20",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Bicycle%20crunch%20with%20back%20support.jpg"
+    },
+    {
+      nome: "Elevação de pernas",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Straight%20Leg%20Raise%20Exercise.jpeg"
+    },
+    {
+      nome: "Mountain climber",
+      series: 3,
+      reps: "30s",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/MountainClimber.JPG"
+    }
+  ],
+
+  4: [
+    {
+      nome: "Remada curvada (galões)",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/DumbbellBentOverRow.JPG"
+    },
+    {
+      nome: "Rosca bíceps",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Dumbbell-Bicep-Curls.jpg"
+    },
+    {
+      nome: "Rosca martelo",
+      series: 3,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Alternate-hammer-curl-1.png"
+    },
+    {
+      nome: "Superman",
+      series: 3,
+      reps: "20s",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Superman%20exercise%2C%20isometric%20back%20hyperextension.png"
+    }
+  ],
+
+  5: [
+    {
+      nome: "Agachamento sumô",
+      series: 3,
+      reps: "15",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Sumo%20squat.jpg"
+    },
+    {
+      nome: "Ponte de glúteo",
+      series: 3,
+      reps: "20",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Glute_bridge.jpg"
+    },
+    {
+      nome: "Step-up (escada)",
+      series: 3,
+      reps: "10 por perna",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Step%20exercise.JPG"
+    }
+  ],
+
+  6: [
+    {
+      nome: "Burpee",
+      series: 4,
+      reps: "8",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Airborne%20Burpee.jpg"
+    },
+    {
+      nome: "Agachamento + desenvolvimento (galões)",
+      series: 4,
+      reps: "12",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Girl%20doing%20dumbbell%20shoulder%20press%2002.jpg"
+    },
+    {
+      nome: "Flexão",
+      series: 4,
+      reps: "10",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Exercise%20Press%20Up.png"
+    }
+  ],
+
+  7: [
+    {
+      nome: "Alongamento geral",
+      series: 1,
+      reps: "5–10 min",
+      img: "https://commons.wikimedia.org/wiki/Special:FilePath/Stretching_exercises.jpg"
+    },
+    {
+      nome: "Caminhada leve",
+      series: 1,
+      reps: "10–20 min",
+      img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1"
+    }
+  ]
+};
 
     const selDia = document.getElementById("selDia");
     const inpData = document.getElementById("inpData");
@@ -132,10 +251,22 @@
 
       plano[dia].forEach((ex, exIdx) => {
         const card = document.createElement("div");
-        card.className = "card mb-3";
+        card.className = "card mb-3 ";
 
         const body = document.createElement("div");
-        body.className = "card-body";
+        body.className = "card-body ";
+
+        if (ex.img) {
+            const img = document.createElement("img");
+            img.src = ex.img;
+            img.alt = ex.nome;
+            img.className = "img-fluid rounded border mb-3 ";
+            img.style.maxHeight = "200px";  
+            img.style.alignItems = "center";
+            img.style.objectFit = "contain"; 
+            img.loading = "lazy";
+            body.appendChild(img);
+        }
 
         const title = document.createElement("div");
         title.className = "d-flex justify-content-between align-items-start";
